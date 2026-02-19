@@ -10,7 +10,7 @@ const { get, set, rotateOfOuter, translate, scaleOfOuter, multiplyParent, scale:
 export function stretchMode(data: ILeafPaintPatternData, box: IBoundsData, scaleX: number, scaleY: number): void {
     const transform: IMatrixData = get(), { x, y } = box
     if (x || y) translate(transform, x, y)
-    else transform.onlyScale = true
+    else if (scaleX > 0 && scaleY > 0) transform.onlyScale = true
     scaleHelper(transform, scaleX, scaleY)
     data.transform = transform
 }

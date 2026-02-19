@@ -62,6 +62,8 @@ function getLeafPaint(attrName: string, paint: IPaint, ui: IUI): ILeafPaint {
 
     switch (paint.type) {
         case 'image':
+        case 'film':
+        case 'video':
             if (!paint.url) return undefined
             leafPaint = PaintImage.image(ui, attrName, paint, boxBounds, !recycleMap || !recycleMap[paint.url])
             break

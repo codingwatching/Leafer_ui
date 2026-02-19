@@ -86,8 +86,9 @@ export function image(ui: IUI, attrName: string, paint: IImagePaint, boxBounds: 
 
 
 function checkSizeAndCreateData(ui: IUI, attrName: string, paint: IImagePaint, image: ILeaferImage, leafPaint: ILeafPaint, boxBounds: IBoundsData): boolean {
-    if (attrName === 'fill' && !ui.__.__naturalWidth) {
-        const data = ui.__
+    const data = ui.__
+
+    if (attrName === 'fill' && !data.__naturalWidth) {
         data.__naturalWidth = image.width / data.pixelRatio
         data.__naturalHeight = image.height / data.pixelRatio
         if (data.__autoSide) {
@@ -100,7 +101,13 @@ function checkSizeAndCreateData(ui: IUI, attrName: string, paint: IImagePaint, i
         }
     }
 
-    if (!leafPaint.data) PaintImage.createData(leafPaint, image, paint, boxBounds)
+    if (!leafPaint.data) {
+        PaintImage.createData(leafPaint, image, paint, boxBounds)
+
+        const { transform } = leafPaint.data, { opacity, blendMode } = paint
+        const clip = (transform && !transform.onlyScale) || data.path || data.cornerRadius
+        if (clip || (opacity && opacity < 1) || blendMode) leafPaint.complex = clip ? 2 : true
+    }
     return true
 }
 

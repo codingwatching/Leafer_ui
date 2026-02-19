@@ -1,4 +1,4 @@
-import { IPointData, IPathCommandData, IWindingRule, IBlendMode, IExportFileType, IFourNumber, IAlign, IUnitPointData, IAxis, IAxisReverse, IInterlace, IFilter, IOptionSizeData, ISizeData, IGap, IPointGap, IScaleFixed, IDirection, IImageLOD, IPercentData } from '@leafer/interface'
+import { IPointData, IPathCommandData, IWindingRule, IBlendMode, IExportFileType, IMultimediaType, IFourNumber, IAlign, IUnitPointData, IAxis, IAxisReverse, IInterlace, IFilter, IOptionSizeData, ISizeData, IGap, IPointGap, IScaleFixed, IDirection, IImageLOD, IPercentData } from '@leafer/interface'
 import { IColorString, IPaintString } from './IStringType'
 import { IStrokeStyle } from '../ICommonAttr'
 
@@ -24,9 +24,9 @@ export interface IPaintBase {
 }
 
 export type IPaintType =
-    | 'image'
     | 'solid'
     | IGradientType
+    | IMultimediaType
 
 export type IGradientType =
     | 'linear'
@@ -71,7 +71,7 @@ export interface IColorStop {
 
 // ---
 export interface IImagePaint extends IPaintBase {
-    type: "image"
+    type: IMultimediaType
 
     url: string
     lod?: IImageLOD

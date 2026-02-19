@@ -16,8 +16,8 @@ export function checkImage(paint: ILeafPaint, drawImage: boolean, ui: IUI, canva
         if (drawImage) {
             if (data.repeat) {
                 drawImage = false
-            } else if (!((originPaint as IImagePaint).changeful || (Platform.name === 'miniapp' && ResizeEvent.isResizing(ui)) || exporting)) { //  小程序resize过程中直接绘制原图（绕过垃圾回收bug)
-                drawImage = Platform.image.isLarge(image, scaleX, scaleY) || image.width * scaleX > 8096 || image.height * scaleY > 8096 // 大长图单边超过8096生成pattern会有问题
+            } else if (!((originPaint as IImagePaint).changeful || paint.type !== 'image' || (Platform.name === 'miniapp' && ResizeEvent.isResizing(ui)) || exporting)) { //  小程序resize过程中直接绘制原图（绕过垃圾回收bug)
+                drawImage = Platform.image.isLarge(image, scaleX, scaleY) || image.width * scaleX > 8096 || image.height * scaleY > 8096 // 非image类型的尽量绘制原图，大长图单边超过8096生成pattern会有问题
             }
         }
 
@@ -37,22 +37,27 @@ export function checkImage(paint: ILeafPaint, drawImage: boolean, ui: IUI, canva
 }
 
 export function drawImage(paint: ILeafPaint, _imageScaleX: number, _imageScaleY: number, ui: IUI, canvas: ILeaferCanvas, _renderOptions: IRenderOptions): void {
-    const { data, image } = paint, { blendMode } = paint.originPaint as IImagePaint, { opacity, transform } = data, view = image.getFull(data.filters), u = ui.__
-    let { width, height } = image, clipUI: any
+    const { data, image, complex } = paint
+    let { width, height } = image
 
-    if ((clipUI = (transform && !transform.onlyScale) || u.path || u.cornerRadius) || opacity || blendMode) {
-        canvas.save()
-        clipUI && canvas.clipUI(ui)
+    if (complex) {
+
+        const { blendMode, opacity } = paint.originPaint as IImagePaint, { transform } = data
+        canvas.save();
+        (complex === 2) && canvas.clipUI(ui)
         blendMode && (canvas.blendMode = blendMode)
         opacity && (canvas.opacity *= opacity)
         transform && canvas.transform(transform)
-        canvas.drawImage(view, 0, 0, width, height) // svg need size
+        image.render(canvas, width, height, paint) // svg need size
         canvas.restore()
-    } else { // 简单矩形
-        if (data.scaleX) width *= data.scaleX, height *= data.scaleY
-        canvas.drawImage(view, 0, 0, width, height)
-    }
 
+    } else {
+
+        // 简单矩形
+        if (data.scaleX) width *= data.scaleX, height *= data.scaleY
+        image.render(canvas, width, height, paint)
+
+    }
 }
 
 export function getImageRenderScaleData(paint: ILeafPaint, ui: IUI, canvas?: ILeaferCanvas, _renderOptions?: IRenderOptions): IScaleData {

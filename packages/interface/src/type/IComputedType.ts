@@ -1,7 +1,7 @@
 import { IBlendMode, IDirection, IInterlace, ILeaferImage, IMatrixData, IPointData, IScaleFixed, ITaskItem } from '@leafer/interface'
 
 import { IColorString } from './IStringType'
-import { IStrokeAlign, IStrokeJoin, IStrokeCap, IImagePaintMode, IImageFilters, IPaint } from './IType'
+import { IStrokeAlign, IStrokeJoin, IStrokeCap, IImagePaintMode, IPaint } from './IType'
 import { IPaintType } from './IType'
 import { IStrokeComputedStyle } from '../ICommonAttr'
 
@@ -22,6 +22,8 @@ export interface ILeafPaint {
     patternTask?: ITaskItem
     progressTimer?: any
 
+    complex?: boolean | 2 // 绘制原图时canvas需要save、restore, 为2表示需要clipUI
+
     isTransparent?: boolean // 是否为透明色
     data?: ILeafPaintPatternData
     originPaint?: IPaint // 原始paint对象
@@ -31,9 +33,7 @@ export interface ILeafPaintPatternData {
     scaleX?: number
     scaleY?: number
     gap?: IPointData
-    opacity?: number
     transform?: IMatrixData
-    filters?: IImageFilters
     mode?: IImagePaintMode
     repeat?: 'repeat' | 'repeat-x' | 'repeat-y'
     interlace?: IInterlace
