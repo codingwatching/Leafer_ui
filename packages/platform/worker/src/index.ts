@@ -1,13 +1,13 @@
 export * from '@leafer-ui/interface'
 
-export * from './core'
+export * from '@leafer/worker-core'
 export * from '@leafer/partner'
 
 export * from '@leafer-ui/core'
 export * from '@leafer-ui/partner'
 
 import { ICreator } from '@leafer/interface'
-import { useCanvas, Creator, LeaferCanvas } from './core'
+import { useCanvas, Creator, LeaferCanvas } from '@leafer/worker-core'
 import { HitCanvasManager, InteractionBase } from '@leafer-ui/core'
 
 

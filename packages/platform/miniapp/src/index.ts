@@ -1,6 +1,6 @@
 export * from '@leafer-ui/interface'
 
-export * from './core'
+export * from '@leafer/miniapp-core'
 export * from '@leafer/partner'
 
 export * from '@leafer-ui/core'
@@ -8,7 +8,7 @@ export * from '@leafer-ui/interaction-miniapp'
 export * from '@leafer-ui/partner'
 
 import { ICreator } from '@leafer/interface'
-import { useCanvas, Creator, LeaferCanvas } from './core'
+import { useCanvas, Creator, LeaferCanvas } from '@leafer/miniapp-core'
 import { Leafer } from '@leafer-ui/draw'
 import { HitCanvasManager } from '@leafer-ui/core'
 import { Interaction } from '@leafer-ui/interaction-miniapp'
