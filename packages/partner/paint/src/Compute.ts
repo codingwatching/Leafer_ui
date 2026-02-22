@@ -58,14 +58,15 @@ function getLeafPaint(attrName: string, paint: IPaint, ui: IUI): ILeafPaint {
     if (!isObject(paint) || paint.visible === false || paint.opacity === 0) return undefined
 
     let leafPaint: ILeafPaint
-    const { boxBounds } = ui.__layout
+    const { boxBounds } = ui.__layout, { type } = paint
 
-    switch (paint.type) {
+    switch (type) {
         case 'image':
         case 'film':
         case 'video':
             if (!paint.url) return undefined
             leafPaint = PaintImage.image(ui, attrName, paint, boxBounds, !recycleMap || !recycleMap[paint.url])
+            if (type !== 'image') PaintImage[type](leafPaint)
             break
         case 'linear':
             leafPaint = PaintGradient.linearGradient(paint, boxBounds)
@@ -77,7 +78,7 @@ function getLeafPaint(attrName: string, paint: IPaint, ui: IUI): ILeafPaint {
             leafPaint = PaintGradient.conicGradient(paint, boxBounds)
             break
         case 'solid':
-            const { type, color, opacity } = paint
+            const { color, opacity } = paint
             leafPaint = { type, style: ColorConvert.string(color, opacity) }
             break
         default:

@@ -1,3 +1,4 @@
+import { IMultimediaType } from '@leafer/interface'
 import { IImageData, IImageInputData, IImage, IObject, IJSONOptions } from '@leafer-ui/interface'
 
 import { RectData } from './RectData'
@@ -7,6 +8,8 @@ export class ImageData extends RectData implements IImageData {
 
     declare public __leaf: IImage
 
+    public get __urlType(): IMultimediaType { return 'image' }
+
     protected _url: string
 
     protected setUrl(value: string) {
@@ -15,7 +18,7 @@ export class ImageData extends RectData implements IImageData {
     }
 
     public __setImageFill(value: string): void {
-        (this as IImageInputData).fill = value ? { type: 'image', mode: 'stretch', url: value } : undefined
+        (this as IImageInputData).fill = value ? { type: this.__urlType, mode: 'stretch', url: value } : undefined
     }
 
     public __getData(): IObject {

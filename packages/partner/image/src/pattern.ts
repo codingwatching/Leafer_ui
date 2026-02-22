@@ -21,7 +21,7 @@ export function createPatternTask(paint: ILeafPaint, ui: IUI, canvas: ILeaferCan
 }
 
 export function createPattern(paint: ILeafPaint, ui: IUI, canvas: ILeaferCanvas, renderOptions: IRenderOptions): void {
-    let { scaleX, scaleY } = PaintImage.getImageRenderScaleData(paint, ui, canvas, renderOptions), id = scaleX + '-' + scaleY
+    let { scaleX, scaleY } = PaintImage.getImageRenderScaleData(paint, ui, canvas, renderOptions), id = paint.film ? paint.nowIndex : scaleX + '-' + scaleY
 
     if (paint.patternId !== id && !ui.destroyed) {
         if (!(Platform.image.isLarge(paint.image, scaleX, scaleY) && !paint.data.repeat)) {

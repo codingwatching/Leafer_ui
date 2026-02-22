@@ -6,17 +6,17 @@ import { PaintImage } from "@leafer-ui/draw"
 
 
 export function checkImage(paint: ILeafPaint, drawImage: boolean, ui: IUI, canvas: ILeaferCanvas, renderOptions: IRenderOptions): boolean {
-    const { scaleX, scaleY } = PaintImage.getImageRenderScaleData(paint, ui, canvas, renderOptions)
+    const { scaleX, scaleY } = PaintImage.getImageRenderScaleData(paint, ui, canvas, renderOptions), id = paint.film ? paint.nowIndex : scaleX + '-' + scaleY
     const { image, data, originPaint } = paint, { exporting, snapshot } = renderOptions
 
-    if (!data || (paint.patternId === scaleX + '-' + scaleY && !exporting) || snapshot) {
+    if (!data || (paint.patternId === id && !exporting) || snapshot) {
         return false // 生成图案中
     } else {
 
         if (drawImage) {
             if (data.repeat) {
                 drawImage = false
-            } else if (!((originPaint as IImagePaint).changeful || paint.type !== 'image' || (Platform.name === 'miniapp' && ResizeEvent.isResizing(ui)) || exporting)) { //  小程序resize过程中直接绘制原图（绕过垃圾回收bug)
+            } else if (!((originPaint as IImagePaint).changeful || paint.film || (Platform.name === 'miniapp' && ResizeEvent.isResizing(ui)) || exporting)) { //  小程序resize过程中直接绘制原图（绕过垃圾回收bug)
                 drawImage = Platform.image.isLarge(image, scaleX, scaleY) || image.width * scaleX > 8096 || image.height * scaleY > 8096 // 非image类型的尽量绘制原图，大长图单边超过8096生成pattern会有问题
             }
         }
@@ -48,14 +48,14 @@ export function drawImage(paint: ILeafPaint, _imageScaleX: number, _imageScaleY:
         blendMode && (canvas.blendMode = blendMode)
         opacity && (canvas.opacity *= opacity)
         transform && canvas.transform(transform)
-        image.render(canvas, width, height, paint) // svg need size
+        image.render(canvas, 0, 0, width, height, ui, paint) // svg need size
         canvas.restore()
 
     } else {
 
         // 简单矩形
         if (data.scaleX) width *= data.scaleX, height *= data.scaleY
-        image.render(canvas, width, height, paint)
+        image.render(canvas, 0, 0, width, height, ui, paint)
 
     }
 }

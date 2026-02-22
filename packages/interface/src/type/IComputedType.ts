@@ -1,4 +1,4 @@
-import { IBlendMode, IDirection, IInterlace, ILeaferImage, IMatrixData, IPointData, IScaleFixed, ITaskItem } from '@leafer/interface'
+import { IBlendMode, IDirection, IFilmPlayOptions, IInterlace, ILeaferImage, IMatrixData, IPointData, IScaleFixed, ITaskItem } from '@leafer/interface'
 
 import { IColorString } from './IStringType'
 import { IStrokeAlign, IStrokeJoin, IStrokeCap, IImagePaintMode, IPaint } from './IType'
@@ -7,7 +7,7 @@ import { IStrokeComputedStyle } from '../ICommonAttr'
 
 export type ILeafPaintColor = IColorString | CanvasGradient | CanvasPattern
 
-export interface ILeafPaint {
+export interface ILeafPaint extends IFilmPlayOptions {
     type?: IPaintType
     style?: ILeafPaintColor
     strokeStyle?: IStrokeComputedStyle // 子描边样式选项
@@ -18,7 +18,7 @@ export interface ILeafPaint {
     drawLevel?: number // drawImage level
 
     loadId?: number
-    patternId?: string
+    patternId?: string | number
     patternTask?: ITaskItem
     progressTimer?: any
 
@@ -27,6 +27,8 @@ export interface ILeafPaint {
     isTransparent?: boolean // 是否为透明色
     data?: ILeafPaintPatternData
     originPaint?: IPaint // 原始paint对象
+
+    film?: boolean // flim或video类型
 }
 
 export interface ILeafPaintPatternData {

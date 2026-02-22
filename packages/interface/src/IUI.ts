@@ -1,4 +1,4 @@
-import { ILeaf, ILeafComputedData, ILeafData, ILeafInputData, ILeaferCanvas, IRenderOptions, IExportOptions, IExportResult, IPathDrawer, IPointData, IPathCommandData, IBoundsData, IObject, IPathString, ILeaferImage, IPathCreator, IAnswer, IPickOptions, IPickResult, IValue, ICanvasContext2DSettings, IFourNumber, IFindCondition, IBoolean, ICanvasContext2D, IJSONOptions, IMatrixData, ISizeData, ITransition, IAround } from '@leafer/interface'
+import { ILeaf, ILeafComputedData, ILeafData, ILeafInputData, ILeaferCanvas, IRenderOptions, IExportOptions, IExportResult, IPathDrawer, IPointData, IPathCommandData, IBoundsData, IObject, IPathString, ILeaferImage, IPathCreator, IAnswer, IPickOptions, IPickResult, IValue, ICanvasContext2DSettings, IFourNumber, IFindCondition, IBoolean, ICanvasContext2D, IJSONOptions, IMatrixData, ISizeData, ITransition, IAround, IMultimediaType } from '@leafer/interface'
 
 import {
     IFillAttrData, IFillInputData, IFillComputedData,
@@ -71,75 +71,6 @@ interface IFlowAttrData {
 }
 export interface IFlowData extends IFlowAttrData, IBoxData { }
 export interface IFlowInputData extends IFlowAttrData, IBoxInputData { }
-
-
-
-// Video
-export interface IVideo extends IPlayerMethods, IRect {
-    __: IVideoData
-}
-
-interface IPlayerMethods {
-    play(): void
-    pause(): void
-    stop(): void
-}
-
-interface IVideoAttrData {
-    url?: string
-}
-export interface IVideoData extends IVideoAttrData, IRectData { }
-export interface IVideoInputData extends IVideoAttrData, IRectInputData { }
-
-
-
-// Robot
-export interface IRobot extends IRobotAttrData, IPlayerMethods, IRect {
-    __: IRobotData
-    readonly running: boolean
-    readonly nowFrame?: IRobotComputedKeyframe
-    readonly robotFrames?: IRobotComputedKeyframe[]
-
-    __updateRobot(): void
-    __updateAction(): void
-}
-
-interface IRobotAttrData {
-    robot?: IRobotKeyframe | IRobotKeyframe[]
-    actions?: IRobotActions
-    action?: IRobotActionName
-    now?: number
-    FPS?: number
-    loop?: boolean | number
-}
-
-export interface IRobotActions {
-    [name: string]: IKeyframeId | IKeyframeId[] | IRobotAnimation
-}
-
-export interface IRobotAnimation {
-    keyframes: IKeyframeId[]
-    loop?: boolean | number
-    FPS?: number
-}
-
-export type IRobotActionName = string
-
-export interface IRobotKeyframe {
-    mode?: 'normal' | 'clip'
-    url: string
-
-    offset?: IPointData
-    size?: number | ISizeData
-    total?: number
-}
-
-export interface IRobotComputedKeyframe extends IBoundsData {
-    view: any
-}
-
-export interface IRobotData extends IRobotAttrData, IRectData { }
-export interface IRobotInputData extends IRobotAttrData, IRectInputData { }
 
 
 // Rect
@@ -300,10 +231,13 @@ interface IImageAttrData {
     background?: IFill
 }
 export interface IImageData extends IImageAttrData, IRectData {
+    readonly __urlType: IMultimediaType
     __setImageFill(value: string): void
 }
 export interface IImageInputData extends IImageAttrData, IUIBaseInputData { }
 
+
+// Canvas
 export interface ICanvas extends ICanvasAttrData, IRect {
     __: ICanvasData
     canvas?: ILeaferCanvas
@@ -318,6 +252,90 @@ interface ICanvasAttrData {
 }
 export interface ICanvasData extends ICanvasAttrData, IRectData { }
 export interface ICanvasInputData extends ICanvasAttrData, IUIBaseInputData { }
+
+
+// Film
+export interface IFilm extends IFilmAttrData, IPlayerMethods, IImage {
+    __: IFilmData
+}
+interface IFilmAttrData {
+    url?: string
+}
+export interface IFilmData extends IFilmAttrData, IImageData {
+
+}
+export interface IFilmInputData extends IFilmAttrData, IUIBaseInputData { }
+
+
+
+// Video
+export interface IVideo extends IVideoAttrData, IPlayerMethods, IImage {
+    __: IVideoData
+}
+
+interface IPlayerMethods {
+    togglePlay(): void
+    play(): void
+    pause(): void
+    stop(): void
+}
+
+interface IVideoAttrData {
+    url?: string
+}
+export interface IVideoData extends IVideoAttrData, IImageData { }
+export interface IVideoInputData extends IVideoAttrData, IImageInputData { }
+
+
+
+// Robot
+export interface IRobot extends IRobotAttrData, IPlayerMethods, IRect {
+    __: IRobotData
+    readonly running: boolean
+    readonly nowFrame?: IRobotComputedKeyframe
+    readonly robotFrames?: IRobotComputedKeyframe[]
+
+    __updateRobot(): void
+    __updateAction(): void
+}
+
+interface IRobotAttrData {
+    robot?: IRobotKeyframe | IRobotKeyframe[]
+    actions?: IRobotActions
+    action?: IRobotActionName
+    now?: number
+    FPS?: number
+    loop?: boolean | number
+}
+
+export interface IRobotActions {
+    [name: string]: IKeyframeId | IKeyframeId[] | IRobotAnimation
+}
+
+export interface IRobotAnimation {
+    keyframes: IKeyframeId[]
+    loop?: boolean | number
+    FPS?: number
+}
+
+export type IRobotActionName = string
+
+export interface IRobotKeyframe {
+    mode?: 'normal' | 'clip'
+    url: string
+
+    offset?: IPointData
+    size?: number | ISizeData
+    total?: number
+}
+
+export interface IRobotComputedKeyframe extends IBoundsData {
+    view: any
+}
+
+export interface IRobotData extends IRobotAttrData, IRectData { }
+export interface IRobotInputData extends IRobotAttrData, IRectInputData { }
+
 
 
 // Leafer

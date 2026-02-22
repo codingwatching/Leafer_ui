@@ -16,7 +16,7 @@ const { isSame } = BoundsHelper
 
 export function image(ui: IUI, attrName: string, paint: IImagePaint, boxBounds: IBoundsData, firstUse: boolean): ILeafPaint {
     let leafPaint: ILeafPaint, event: IImageEvent
-    const image = ImageManager.get(paint)
+    const image = ImageManager.get(paint, paint.type)
 
     if (cache && paint === cache.paint && isSame(boxBounds, cache.boxBounds)) {
         leafPaint = cache.leafPaint

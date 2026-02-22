@@ -16,6 +16,7 @@ export {
     IText, ITextInputData, ITextData, ITextRowData, ITextWordData, ITextCharData, ITextDrawData, IBackgroundBoxStyle,
     IImage, IImageInputData, IImageData,
     ICanvas, ICanvasInputData, ICanvasData,
+    IFilm, IFilmInputData, IFilmData,
     IFrame, IFrameInputData, IFrameData,
     IFlow, IFlowInputData, IFlowData,
     IVideo, IVideoInputData, IVideoData,

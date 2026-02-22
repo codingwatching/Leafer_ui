@@ -1,4 +1,4 @@
-import { IPointData, IPathCommandData, IWindingRule, IBlendMode, IExportFileType, IMultimediaType, IFourNumber, IAlign, IUnitPointData, IAxis, IAxisReverse, IInterlace, IFilter, IOptionSizeData, ISizeData, IGap, IPointGap, IScaleFixed, IDirection, IImageLOD, IPercentData } from '@leafer/interface'
+import { IPointData, IPathCommandData, IWindingRule, IBlendMode, IExportFileType, IMultimediaType, IFourNumber, IAlign, IUnitPointData, IAxis, IAxisReverse, IInterlace, IFilter, IOptionSizeData, ISizeData, IGap, IPointGap, IScaleFixed, IDirection, IImageLOD, IPercentData, IFilmOptions } from '@leafer/interface'
 import { IColorString, IPaintString } from './IStringType'
 import { IStrokeStyle } from '../ICommonAttr'
 
@@ -70,7 +70,7 @@ export interface IColorStop {
 }
 
 // ---
-export interface IImagePaint extends IPaintBase {
+export interface IImagePaint extends IPaintBase, IFilmOptions {
     type: IMultimediaType
 
     url: string
