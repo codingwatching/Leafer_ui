@@ -312,6 +312,11 @@ export class UI<TInputData = IUIInputData> extends Leaf<TInputData> implements I
     public filter?: IFilter | IFilter[]
 
 
+    // need rewrite
+
+    public complex?: boolean
+
+
     // @leafer-in/animate rewrite
 
     public animation?: IAnimation | IAnimation[]
