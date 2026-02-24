@@ -63,7 +63,10 @@ export class Group<TInputData = IGroupInputData> extends UI<TInputData> implemen
 
     override toJSON(options?: IJSONOptions): IUIJSONData {
         const data = super.toJSON(options)
-        if (!this.childlessJSON) data.children = this.children.map(child => child.toJSON(options))
+        if (!this.childlessJSON) {
+            const children: IUIJSONData[] = data.children = []
+            this.children.forEach(child => child.skipJSON || children.push(child.toJSON(options)))
+        }
         return data
     }
 
