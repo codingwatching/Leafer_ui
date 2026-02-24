@@ -36,7 +36,7 @@ export function checkImage(paint: ILeafPaint, drawImage: boolean, ui: IUI, canva
     }
 }
 
-export function drawImage(paint: ILeafPaint, _imageScaleX: number, _imageScaleY: number, ui: IUI, canvas: ILeaferCanvas, _renderOptions: IRenderOptions): void {
+export function drawImage(paint: ILeafPaint, imageScaleX: number, imageScaleY: number, ui: IUI, canvas: ILeaferCanvas, _renderOptions: IRenderOptions): void {
     const { data, image, complex } = paint
     let { width, height } = image
 
@@ -48,14 +48,14 @@ export function drawImage(paint: ILeafPaint, _imageScaleX: number, _imageScaleY:
         blendMode && (canvas.blendMode = blendMode)
         opacity && (canvas.opacity *= opacity)
         transform && canvas.transform(transform)
-        image.render(canvas, 0, 0, width, height, ui, paint) // svg need size
+        image.render(canvas, 0, 0, width, height, ui, paint, imageScaleX, imageScaleY) // svg need size
         canvas.restore()
 
     } else {
 
         // 简单矩形
         if (data.scaleX) width *= data.scaleX, height *= data.scaleY
-        image.render(canvas, 0, 0, width, height, ui, paint)
+        image.render(canvas, 0, 0, width, height, ui, paint, imageScaleX, imageScaleY)
 
     }
 }
