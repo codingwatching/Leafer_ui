@@ -103,7 +103,10 @@ export class InteractionBase implements IInteraction {
 
         this.downTime = Date.now()
 
-        this.emit(PointerEvent.BEFORE_DOWN, data) // downData maybe changed
+        this.emit(PointerEvent.BEFORE_DOWN, data)
+
+        if (data.path.needUpdate) this.updateDownData(data) // downData maybe changed
+
         this.emit(PointerEvent.DOWN, data)
 
         if (PointerButton.left(data)) {
