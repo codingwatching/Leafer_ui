@@ -257,6 +257,7 @@ export interface ICanvasInputData extends ICanvasAttrData, IUIBaseInputData { }
 // Film
 export interface IFilm extends IFilmAttrData, IPlayerMethods, IImage {
     __: IFilmData
+    seekFrame(frameIndex: number): void
 }
 interface IFilmAttrData {
     url?: string
