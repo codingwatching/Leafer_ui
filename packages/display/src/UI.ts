@@ -105,6 +105,7 @@ export class UI<TInputData = IUIInputData> extends Leaf<TInputData> implements I
     public scaleY?: INumber
 
     // @leafer-in/scale-fixed will rewrite
+    @scaleType()
     public scaleFixed?: IScaleFixed
 
     // rotate
